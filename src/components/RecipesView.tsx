@@ -61,9 +61,9 @@ export const RecipesView: React.FC<RecipesViewProps> = ({
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-8">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-emerald-200">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-amber-300">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-emerald-100 p-3 rounded-2xl text-emerald-700">
+          <div className="bg-amber-100 p-3 rounded-2xl text-amber-700">
             <BookOpen size={36} />
           </div>
           <div>
@@ -79,14 +79,14 @@ export const RecipesView: React.FC<RecipesViewProps> = ({
             placeholder="Scrivi un piatto (es. Tiramisù, Risotto ai funghi)..."
             value={customRecipe}
             onChange={(e) => setCustomRecipe(e.target.value)}
-            className="flex-1 p-4 border-2 border-slate-300 rounded-2xl text-xl focus:border-emerald-600 focus:outline-hidden bg-slate-50 text-slate-900 font-medium"
+            className="flex-1 p-4 border-2 border-slate-300 rounded-2xl text-xl focus:border-amber-500 focus:outline-hidden bg-slate-50 text-slate-900 font-medium"
           />
           <button
             onClick={() => {
               if (customRecipe.trim()) fetchRecipeIngredients(customRecipe.trim());
             }}
             disabled={loading || !customRecipe.trim()}
-            className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-bold py-4 px-8 rounded-2xl text-xl shadow-lg flex items-center justify-center gap-2 transition"
+            className="bg-amber-600 hover:bg-amber-700 disabled:bg-slate-300 text-white font-bold py-4 px-8 rounded-2xl text-xl shadow-lg flex items-center justify-center gap-2 transition"
           >
             {loading ? <Loader2 className="animate-spin" size={26} /> : <Sparkles size={26} />}
             Cerca Ingredienti
@@ -104,10 +104,10 @@ export const RecipesView: React.FC<RecipesViewProps> = ({
                   setCustomRecipe(recipe);
                   fetchRecipeIngredients(recipe);
                 }}
-                className="bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-300 text-emerald-900 font-bold p-4 rounded-2xl text-left text-lg transition flex items-center justify-between group shadow-xs"
+                className="bg-sky-50 hover:bg-sky-100 border-2 border-sky-300 text-sky-900 font-bold p-4 rounded-2xl text-left text-lg transition flex items-center justify-between group shadow-xs"
               >
                 <span>{recipe}</span>
-                <Sparkles size={20} className="text-emerald-600 group-hover:scale-125 transition-transform" />
+                <Sparkles size={20} className="text-sky-600 group-hover:scale-125 transition-transform" />
               </button>
             ))}
           </div>
@@ -117,7 +117,7 @@ export const RecipesView: React.FC<RecipesViewProps> = ({
       {/* Loading state */}
       {loading && (
         <div className="bg-white rounded-3xl p-12 text-center border-2 border-slate-200 shadow-md">
-          <Loader2 className="animate-spin text-emerald-600 mx-auto mb-4" size={56} />
+          <Loader2 className="animate-spin text-amber-600 mx-auto mb-4" size={56} />
           <h3 className="text-2xl font-bold text-slate-700">Sto calcolando gli ingredienti con l'intelligenza artificiale...</h3>
         </div>
       )}
@@ -131,10 +131,10 @@ export const RecipesView: React.FC<RecipesViewProps> = ({
 
       {/* Recipe Ingredients Result */}
       {currentRecipeData && !loading && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-3 border-emerald-400 space-y-6 animate-in fade-in zoom-in duration-200">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-3 border-amber-400 space-y-6 animate-in fade-in zoom-in duration-200">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b-2 border-slate-200">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-3 py-1 rounded-full">
                 Ricetta Selezionata
               </span>
               <h3 className="text-3xl font-extrabold text-slate-800 mt-2">{currentRecipeData.recipeTitle}</h3>
@@ -142,7 +142,7 @@ export const RecipesView: React.FC<RecipesViewProps> = ({
             <button
               onClick={handleAddAll}
               disabled={addedSuccess}
-              className={`font-bold py-4 px-8 rounded-2xl text-xl shadow-lg flex items-center gap-3 transition ${addedSuccess ? 'bg-emerald-700 text-white' : 'bg-emerald-600 hover:bg-emerald-700 text-white'}`}
+              className={`font-bold py-4 px-8 rounded-2xl text-xl shadow-lg flex items-center gap-3 transition ${addedSuccess ? 'bg-amber-700 text-white' : 'bg-amber-600 hover:bg-amber-700 text-white'}`}
             >
               {addedSuccess ? <Check size={28} strokeWidth={3} /> : <Plus size={28} strokeWidth={3} />}
               {addedSuccess ? 'Aggiunti alla spesa!' : 'Aggiungi Tutti alla Spesa'}
@@ -154,7 +154,7 @@ export const RecipesView: React.FC<RecipesViewProps> = ({
               <div key={idx} className="bg-slate-50 border-2 border-slate-200 p-4 rounded-2xl flex items-center justify-between">
                 <div>
                   <span className="text-xl font-bold text-slate-800 block">{ing.name}</span>
-                  <span className="text-sm font-semibold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full inline-block mt-1">
+                  <span className="text-sm font-semibold text-sky-800 bg-sky-100 px-2.5 py-0.5 rounded-full inline-block mt-1">
                     {ing.quantity} • {ing.category}
                   </span>
                 </div>

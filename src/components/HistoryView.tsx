@@ -15,9 +15,9 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
 }) => {
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-8">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-emerald-200">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-amber-300">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-blue-100 p-3 rounded-2xl text-blue-700">
+          <div className="bg-sky-100 p-3 rounded-2xl text-sky-700">
             <History size={36} />
           </div>
           <div>
@@ -42,14 +42,14 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
               <div key={item.id} className="bg-white rounded-3xl p-5 border-2 border-slate-200 shadow-md flex items-center justify-between gap-4">
                 <div>
                   <span className="text-xl font-bold text-slate-800 block">{item.name}</span>
-                  <span className="text-sm font-semibold text-blue-700 bg-blue-100 px-3 py-1 rounded-full inline-block mt-1">
+                  <span className="text-sm font-semibold text-sky-800 bg-sky-100 px-3 py-1 rounded-full inline-block mt-1">
                     Acquistato {item.frequency} volte • {item.category}
                   </span>
                 </div>
 
                 <button
                   onClick={() => onAddHistoryItem(item.name, item.category)}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-5 rounded-2xl shadow-md flex items-center gap-2 text-base transition"
+                  className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-5 rounded-2xl shadow-md flex items-center gap-2 text-base transition"
                   title="Aggiungi alla spesa"
                 >
                   <Plus size={22} strokeWidth={3} />

@@ -43,9 +43,9 @@ export const PantryView: React.FC<PantryViewProps> = ({
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-8">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-emerald-200">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-amber-300">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-emerald-100 p-3 rounded-2xl text-emerald-700">
+          <div className="bg-amber-100 p-3 rounded-2xl text-amber-700">
             <Package size={36} />
           </div>
           <div>
@@ -63,7 +63,7 @@ export const PantryView: React.FC<PantryViewProps> = ({
                 placeholder="Es. Olio d'oliva, Sale, Zucchero..."
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-4 border-2 border-slate-300 rounded-2xl text-xl focus:border-emerald-600 focus:outline-hidden bg-slate-50 text-slate-900 font-medium"
+                className="w-full p-4 border-2 border-slate-300 rounded-2xl text-xl focus:border-amber-500 focus:outline-hidden bg-slate-50 text-slate-900 font-medium"
               />
             </div>
 
@@ -74,7 +74,7 @@ export const PantryView: React.FC<PantryViewProps> = ({
                 placeholder="Es. 2 bottiglie"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="w-full p-4 border-2 border-slate-300 rounded-2xl text-xl focus:border-emerald-600 focus:outline-hidden bg-slate-50 text-slate-900 font-medium"
+                className="w-full p-4 border-2 border-slate-300 rounded-2xl text-xl focus:border-amber-500 focus:outline-hidden bg-slate-50 text-slate-900 font-medium"
               />
             </div>
 
@@ -83,7 +83,7 @@ export const PantryView: React.FC<PantryViewProps> = ({
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as SupermarketCategory)}
-                className="w-full p-4 border-2 border-slate-300 rounded-2xl text-lg focus:border-emerald-600 focus:outline-hidden bg-slate-50 text-slate-900 font-medium"
+                className="w-full p-4 border-2 border-slate-300 rounded-2xl text-lg focus:border-amber-500 focus:outline-hidden bg-slate-50 text-slate-900 font-medium"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
@@ -95,7 +95,7 @@ export const PantryView: React.FC<PantryViewProps> = ({
           <button
             type="submit"
             disabled={!name.trim()}
-            className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-extrabold py-5 rounded-2xl shadow-lg text-xl flex items-center justify-center gap-3 transition"
+            className="w-full bg-amber-600 hover:bg-amber-700 disabled:bg-slate-300 text-white font-extrabold py-5 rounded-2xl shadow-lg text-xl flex items-center justify-center gap-3 transition"
           >
             <Plus size={28} strokeWidth={3} />
             Aggiungi alla Dispensa
@@ -118,7 +118,7 @@ export const PantryView: React.FC<PantryViewProps> = ({
               <div key={item.id} className="bg-white rounded-3xl p-5 border-2 border-slate-200 shadow-md flex items-center justify-between gap-4">
                 <div>
                   <span className="text-xl font-bold text-slate-800 block">{item.name}</span>
-                  <span className="text-sm font-semibold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full inline-block mt-1">
+                  <span className="text-sm font-semibold text-sky-800 bg-sky-100 px-3 py-1 rounded-full inline-block mt-1">
                     Quantità: {item.quantity} • {item.category}
                   </span>
                 </div>
@@ -126,7 +126,7 @@ export const PantryView: React.FC<PantryViewProps> = ({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onMoveToShoppingList(item)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold p-3 rounded-2xl shadow-md flex items-center gap-2 text-base transition"
+                    className="bg-sky-600 hover:bg-sky-700 text-white font-bold p-3 rounded-2xl shadow-md flex items-center gap-2 text-base transition"
                     title="Aggiungi alla lista della spesa"
                   >
                     <ShoppingCart size={20} />

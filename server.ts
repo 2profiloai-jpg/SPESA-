@@ -43,7 +43,7 @@ Rispondi RIGOROSAMENTE in formato JSON con uno schema di array di oggetti, dove 
 - reason: string (breve spiegazione amichevole del perché si abbina, es. "Ottimo con la pasta")`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -88,7 +88,7 @@ Rispondi RIGOROSAMENTE in formato JSON con un oggetto contenente:
   - category: string (una tra: "Frutta e verdura", "Latticini", "Carne e pesce", "Dispensa", "Bevande", "Pulizia casa", "Igiene personale", "Altro")`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -138,7 +138,7 @@ Estrai:
 Rispondi RIGOROSAMENTE in JSON.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",

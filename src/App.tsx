@@ -8,6 +8,7 @@ import { RecurringView } from './components/RecurringView';
 import { HistoryView } from './components/HistoryView';
 import { ShareModal } from './components/ShareModal';
 import { VoiceModal } from './components/VoiceModal';
+import { InstallModal } from './components/InstallModal';
 import {
   ShoppingList,
   ListItem,
@@ -23,23 +24,11 @@ const INITIAL_LISTS: ShoppingList[] = [
   { id: '2', name: 'Cena con Famiglia', createdAt: new Date().toISOString() }
 ];
 
-const INITIAL_ITEMS: ListItem[] = [
-  { id: '101', listId: '1', name: 'Latte fresco', quantity: '2 litri', category: 'Latticini', checked: false, addedAt: new Date().toISOString() },
-  { id: '102', listId: '1', name: 'Pane integrale', quantity: '1 filone', category: 'Dispensa', checked: false, addedAt: new Date().toISOString() },
-  { id: '103', listId: '1', name: 'Mele Golden', quantity: '1 kg', category: 'Frutta e verdura', checked: true, addedAt: new Date().toISOString() },
-];
+const INITIAL_ITEMS: ListItem[] = [];
 
-const INITIAL_PANTRY: PantryItem[] = [
-  { id: 'p1', name: 'Olio extravergine', category: 'Dispensa', quantity: '1 bottiglia' },
-  { id: 'p2', name: 'Sale fino', category: 'Dispensa', quantity: '1 pacco' },
-  { id: 'p3', name: 'Zucchero semolato', category: 'Dispensa', quantity: '1 kg' },
-];
+const INITIAL_PANTRY: PantryItem[] = [];
 
-const INITIAL_HISTORY: HistoryItem[] = [
-  { id: 'h1', name: 'Latte fresco', category: 'Latticini', frequency: 5, lastBought: new Date().toISOString() },
-  { id: 'h2', name: 'Pane integrale', category: 'Dispensa', frequency: 4, lastBought: new Date().toISOString() },
-  { id: 'h3', name: 'Acqua naturale', category: 'Bevande', frequency: 8, lastBought: new Date().toISOString() },
-];
+const INITIAL_HISTORY: HistoryItem[] = [];
 
 export default function App() {
   // Load from localStorage or defaults
@@ -72,6 +61,7 @@ export default function App() {
   const [textSize, setTextSize] = useState<'normal' | 'large' | 'xlarge'>('large');
   const [showVoiceModal, setShowVoiceModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showInstallModal, setShowInstallModal] = useState(false);
 
   // Save to localStorage
   useEffect(() => {
@@ -241,7 +231,7 @@ export default function App() {
   const activeListItems = items.filter(i => i.listId === activeListId);
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900 font-sans pb-16">
+    <div className="min-h-screen bg-amber-50/40 text-slate-900 font-sans pb-16">
       <Header
         lists={lists}
         activeListId={activeListId}
@@ -249,6 +239,7 @@ export default function App() {
         onCreateList={handleCreateList}
         onOpenVoice={() => setShowVoiceModal(true)}
         onOpenShare={() => setShowShareModal(true)}
+        onOpenInstall={() => setShowInstallModal(true)}
         textSize={textSize}
         onChangeTextSize={setTextSize}
         textSizeClass={textSizeClass}
@@ -324,6 +315,13 @@ export default function App() {
         onTranscript={handleVoiceTranscript}
         textSizeClass={textSizeClass}
       />
+
+      <InstallModal
+        isOpen={showInstallModal}
+        onClose={() => setShowInstallModal(false)}
+        textSizeClass={textSizeClass}
+      />
     </div>
   );
 }
+

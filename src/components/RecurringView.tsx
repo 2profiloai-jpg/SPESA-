@@ -15,7 +15,7 @@ export const RecurringView: React.FC<RecurringViewProps> = ({
 }) => {
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-8">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-emerald-200">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-amber-300">
         <div className="flex items-center gap-3 mb-4">
           <div className="bg-amber-100 p-3 rounded-2xl text-amber-700">
             <Clock size={36} />
@@ -39,17 +39,17 @@ export const RecurringView: React.FC<RecurringViewProps> = ({
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {recurringItems.map((item, idx) => (
-              <div key={idx} className="bg-white rounded-3xl p-6 border-2 border-amber-200 shadow-md flex items-center justify-between gap-4">
+              <div key={idx} className="bg-white rounded-3xl p-6 border-2 border-amber-300 shadow-md flex items-center justify-between gap-4">
                 <div>
                   <span className="text-xl font-bold text-slate-800 block">{item.name}</span>
-                  <span className="text-sm font-semibold text-amber-800 bg-amber-100 px-3 py-1 rounded-full inline-block mt-1">
+                  <span className="text-sm font-semibold text-amber-900 bg-amber-100 px-3 py-1 rounded-full inline-block mt-1">
                     Comprato {item.daysAgo} giorni fa • {item.category}
                   </span>
                 </div>
 
                 <button
                   onClick={() => onAddRecurringItem(item.name, item.quantity, item.category)}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-5 rounded-2xl shadow-md flex items-center gap-2 text-base transition"
+                  className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-5 rounded-2xl shadow-md flex items-center gap-2 text-base transition"
                   title="Aggiungi alla lista"
                 >
                   <Plus size={22} strokeWidth={3} />

@@ -37,14 +37,14 @@ export const Navigation: React.FC<NavigationProps> = ({
               onClick={() => onChangeTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-3 rounded-2xl font-bold text-base sm:text-lg transition whitespace-nowrap shadow-xs ${
                 isActive
-                  ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400'
+                  ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
               }`}
             >
-              <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+              <Icon size={24} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-sky-200' : 'text-slate-500'} />
               <span>{tab.label}</span>
               {tab.badge > 0 && (
-                <span className={`px-2 py-0.5 rounded-full text-xs font-black ${isActive ? 'bg-amber-400 text-slate-900' : 'bg-emerald-600 text-white'}`}>
+                <span className={`px-2.5 py-0.5 rounded-full text-xs font-black ${isActive ? 'bg-sky-500 text-white' : 'bg-amber-600 text-white'}`}>
                   {tab.badge}
                 </span>
               )}
