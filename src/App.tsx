@@ -43,8 +43,22 @@ export default function App() {
 
   const [items, setItems] = useState<ListItem[]>(() => {
     const saved = localStorage.getItem('spesa_items');
-    return saved ? JSON.parse(saved) : INITIAL_ITEMS;
+    if (!saved) return INITIAL_ITEMS;
+    const parsed: ListItem[] = JSON.parse(saved);
+
+    // Midnight / Daily cleanup check
+    const lastDate = localStorage.getItem('spesa_last_date');
+    const today = new Date().toDateString();
+    if (lastDate && lastDate !== today) {
+      // Remove checked items at midnight/new day
+      return parsed.filter(i => !i.checked);
+    }
+    return parsed;
   });
+
+  useEffect(() => {
+    localStorage.setItem('spesa_last_date', new Date().toDateString());
+  }, []);
 
   const [pantryItems, setPantryItems] = useState<PantryItem[]>(() => {
     const saved = localStorage.getItem('spesa_pantry');
@@ -58,7 +72,7 @@ export default function App() {
 
   const [suggestions, setSuggestions] = useState<SmartSuggestion[]>([]);
   const [activeTab, setActiveTab] = useState<ActiveTab>('list');
-  const [textSize, setTextSize] = useState<'normal' | 'large' | 'xlarge'>('large');
+  const [textSize, setTextSize] = useState<'normal' | 'large' | 'xlarge'>('normal');
   const [showVoiceModal, setShowVoiceModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
@@ -80,12 +94,12 @@ export default function App() {
     localStorage.setItem('spesa_history', JSON.stringify(historyItems));
   }, [historyItems]);
 
-  // Text size classes for elderly accessibility
+  // Text size classes optimized for mobile readability without clutter
   const textSizeClass = textSize === 'normal'
-    ? 'text-base'
+    ? 'text-sm sm:text-base'
     : textSize === 'large'
-    ? 'text-xl'
-    : 'text-2xl';
+    ? 'text-base sm:text-lg'
+    : 'text-lg sm:text-xl';
 
   // Fetch smart suggestions from server backend
   const fetchSmartSuggestions = async (itemName: string, currentItems: string[]) => {
@@ -133,9 +147,9 @@ export default function App() {
     fetchSmartSuggestions(name, currentListNames);
   };
 
-  // Toggle item checked
+  // Toggle item checked (disappears immediately from cart when checked)
   const handleToggleItem = (id: string) => {
-    setItems(prev => prev.map(i => i.id === id ? { ...i, checked: !i.checked } : i));
+    setItems(prev => prev.filter(i => i.id !== id));
   };
 
   // Delete item

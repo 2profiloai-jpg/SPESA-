@@ -26,8 +26,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   ];
 
   return (
-    <nav className="bg-white border-b-2 border-slate-200 shadow-sm sticky top-[76px] sm:top-[84px] z-30">
-      <div className="max-w-5xl mx-auto px-2 flex overflow-x-auto no-scrollbar py-2 gap-2 justify-start sm:justify-center">
+    <nav className="bg-white border-b border-slate-200 shadow-xs sticky top-[52px] sm:top-[60px] z-30">
+      <div className="max-w-5xl mx-auto px-2 flex overflow-x-auto no-scrollbar py-1.5 gap-1.5 justify-start sm:justify-center">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -35,16 +35,16 @@ export const Navigation: React.FC<NavigationProps> = ({
             <button
               key={tab.id}
               onClick={() => onChangeTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-3 rounded-2xl font-bold text-base sm:text-lg transition whitespace-nowrap shadow-xs ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs sm:text-sm transition whitespace-nowrap shadow-2xs ${
                 isActive
-                  ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400'
+                  ? 'bg-amber-600 text-white shadow-xs ring-1 ring-amber-400'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
               }`}
             >
-              <Icon size={24} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-sky-200' : 'text-slate-500'} />
+              <Icon size={16} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-sky-200' : 'text-slate-500'} />
               <span>{tab.label}</span>
               {tab.badge > 0 && (
-                <span className={`px-2.5 py-0.5 rounded-full text-xs font-black ${isActive ? 'bg-sky-500 text-white' : 'bg-amber-600 text-white'}`}>
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-black ${isActive ? 'bg-sky-500 text-white' : 'bg-amber-600 text-white'}`}>
                   {tab.badge}
                 </span>
               )}
