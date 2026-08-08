@@ -70,6 +70,67 @@ Rispondi RIGOROSAMENTE in formato JSON con uno schema di array di oggetti, dove 
   }
 });
 
+// Fallback recipes dictionary when AI service is unavailable or offline
+const FALLBACK_RECIPES: Record<string, { recipeTitle: string; ingredients: { name: string; quantity: string; category: string }[] }> = {
+  "carbonara": {
+    recipeTitle: "Spaghetti alla Carbonara",
+    ingredients: [
+      { name: "Spaghetti", quantity: "400g", category: "Dispensa" },
+      { name: "Guanciale", quantity: "150g", category: "Carne e pesce" },
+      { name: "Uova fresche", quantity: "4 grandi", category: "Latticini" },
+      { name: "Pecorino Romano", quantity: "100g", category: "Latticini" },
+      { name: "Pepe nero in grani", quantity: "q.b.", category: "Dispensa" }
+    ]
+  },
+  "lasagne": {
+    recipeTitle: "Lasagne alla Bolognese",
+    ingredients: [
+      { name: "Sfoglie per lasagne", quantity: "1 confezione", category: "Dispensa" },
+      { name: "Macinato misto", quantity: "500g", category: "Carne e pesce" },
+      { name: "Passata di pomodoro", quantity: "700g", category: "Dispensa" },
+      { name: "Besciamella", quantity: "500ml", category: "Latticini" },
+      { name: "Mozzarella / Parmigiano", quantity: "200g", category: "Latticini" }
+    ]
+  },
+  "tiramisù": {
+    recipeTitle: "Tiramisù Tradizionale",
+    ingredients: [
+      { name: "Mascarpone", quantity: "500g", category: "Latticini" },
+      { name: "Savoiardi", quantity: "1 confezione", category: "Dispensa" },
+      { name: "Uova fresche", quantity: "4", category: "Latticini" },
+      { name: "Caffè espresso", quantity: "300ml", category: "Dispensa" },
+      { name: "Cacao amaro in polvere", quantity: "50g", category: "Dispensa" }
+    ]
+  },
+  "minestrone": {
+    recipeTitle: "Minestrone di Verdure",
+    ingredients: [
+      { name: "Verdure miste per minestrone", quantity: "1 kg", category: "Frutta e verdura" },
+      { name: "Patate", quantity: "3 medie", category: "Frutta e verdura" },
+      { name: "Legumi secchi o in scatola", quantity: "250g", category: "Dispensa" },
+      { name: "Olio extravergine d'oliva", quantity: "1 bottiglia", category: "Dispensa" }
+    ]
+  },
+  "parmigiana": {
+    recipeTitle: "Parmigiana di Melanzane",
+    ingredients: [
+      { name: "Melanzane", quantity: "1 kg", category: "Frutta e verdura" },
+      { name: "Passata di pomodoro", quantity: "700g", category: "Dispensa" },
+      { name: "Mozzarella", quantity: "300g", category: "Latticini" },
+      { name: "Parmigiano Reggiano", quantity: "100g", category: "Latticini" }
+    ]
+  },
+  "pollo": {
+    recipeTitle: "Pollo al Forno con Patate",
+    ingredients: [
+      { name: "Pollo a pezzi", quantity: "1 kg", category: "Carne e pesce" },
+      { name: "Patate", quantity: "800g", category: "Frutta e verdura" },
+      { name: "Rosmarino e aglio", quantity: "q.b.", category: "Frutta e verdura" },
+      { name: "Olio d'oliva", quantity: "1 bottiglia", category: "Dispensa" }
+    ]
+  }
+};
+
 // Recipe ingredients parser
 app.post("/api/recipe-ingredients", async (req, res) => {
   try {
@@ -78,7 +139,10 @@ app.post("/api/recipe-ingredients", async (req, res) => {
       return res.status(400).json({ error: "recipeName is required" });
     }
 
-    const prompt = `L'utente vuole preparare la ricetta o il piatto: "${recipeName}".
+    const cleanName = recipeName.toLowerCase().trim();
+
+    try {
+      const prompt = `L'utente vuole preparare la ricetta o il piatto: "${recipeName}".
 Elenca gli ingredienti principali necessari per preparare questo piatto tipico italiano, stimando quantità adeguate per una famiglia media e associando ciascun ingrediente al reparto del supermercato corretto.
 Rispondi RIGOROSAMENTE in formato JSON con un oggetto contenente:
 - recipeTitle: string (nome formattato della ricetta)
@@ -87,35 +151,57 @@ Rispondi RIGOROSAMENTE in formato JSON con un oggetto contenente:
   - quantity: string (es. "500g", "2", "1 bottiglia")
   - category: string (una tra: "Frutta e verdura", "Latticini", "Carne e pesce", "Dispensa", "Bevande", "Pulizia casa", "Igiene personale", "Altro")`;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            recipeTitle: { type: Type.STRING },
-            ingredients: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  name: { type: Type.STRING },
-                  quantity: { type: Type.STRING },
-                  category: { type: Type.STRING }
-                },
-                required: ["name", "quantity", "category"]
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              recipeTitle: { type: Type.STRING },
+              ingredients: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    name: { type: Type.STRING },
+                    quantity: { type: Type.STRING },
+                    category: { type: Type.STRING }
+                  },
+                  required: ["name", "quantity", "category"]
+                }
               }
-            }
-          },
-          required: ["recipeTitle", "ingredients"]
+            },
+            required: ["recipeTitle", "ingredients"]
+          }
         }
-      }
-    });
+      });
 
-    const data = JSON.parse(response.text || "{}");
-    res.json(data);
+      const data = JSON.parse(response.text || "{}");
+      if (data && data.recipeTitle && Array.isArray(data.ingredients)) {
+        return res.json(data);
+      }
+    } catch (aiErr) {
+      console.warn("AI generation failed, using fallback recipe lookup:", aiErr);
+    }
+
+    // Fallback if AI call failed or returned empty result
+    for (const key of Object.keys(FALLBACK_RECIPES)) {
+      if (cleanName.includes(key)) {
+        return res.json(FALLBACK_RECIPES[key]);
+      }
+    }
+
+    // Generic fallback for any other dish
+    return res.json({
+      recipeTitle: recipeName,
+      ingredients: [
+        { name: `Ingredienti base per ${recipeName}`, quantity: "1 confezione", category: "Dispensa" },
+        { name: "Olio d'oliva", quantity: "1 bottiglia", category: "Dispensa" },
+        { name: "Sale e spezie", quantity: "q.b.", category: "Dispensa" }
+      ]
+    });
   } catch (error: any) {
     console.error("Error parsing recipe:", error);
     res.status(500).json({ error: error.message || "Errore nel generare gli ingredienti" });

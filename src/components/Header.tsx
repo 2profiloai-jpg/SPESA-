@@ -101,7 +101,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {showListDropdown && (
-              <div className="absolute right-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-slate-200 z-50 py-1 text-slate-800">
+              <div className="absolute left-0 sm:left-auto sm:right-0 mt-1 w-56 max-w-[80vw] bg-white rounded-xl shadow-xl border border-slate-200 z-50 py-1 text-slate-800">
                 <div className="px-3 py-1.5 border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   Le tue liste
                 </div>

@@ -41,8 +41,14 @@ export const RecipesView: React.FC<RecipesViewProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ recipeName }),
       });
+      
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error('Servizio temporaneamente non disponibile. Riprova tra poco.');
+      }
+
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Errore');
+      if (!res.ok) throw new Error(data.error || 'Errore nella ricerca degli ingredienti');
       setCurrentRecipeData(data);
     } catch (err: any) {
       setError(err.message || 'Impossibile trovare gli ingredienti.');
