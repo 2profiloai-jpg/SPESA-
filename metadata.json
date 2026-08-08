@@ -1,0 +1,6 @@
+{
+  "name": "Spesa Facile",
+  "description": "Lista della spesa intelligente e semplice per anziani e famiglie, con suggerimenti automatici, dispensa virtuale e ricette.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
